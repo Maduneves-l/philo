@@ -10,7 +10,7 @@ CC = cc
 #					SOURCES AND OBJS					 #
 ##########################################################
 
-SRCS =  main.c check_arg.c error.c \
+SRCS =  main.c check_arg.c error.c philo.c \
 
 INCLUDES = includes
 

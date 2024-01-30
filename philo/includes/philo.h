@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:49 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/01/29 13:28:15 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/01/29 15:40:46 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ int			check_int(char **av);
 int			ft_isdigit(int c);
 
 //error.c
-void		error(void);
+void		error(char *s);
+
+//philo.c
+void    	init_data(t_data *data, char **av);
 
 #endif
