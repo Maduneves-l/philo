@@ -6,18 +6,23 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:42 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/01/29 15:40:08 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/02/19 20:16:31 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+t_data	*data(void)
+{
+	static t_data	data;
+
+	return (&data);
+}
+
 int	main(int ac, char **av)
 {
-	t_data data;
-	
 	if (check_arg(ac, av))
 		error("Invalid arguments");
-    init_data(&data, av);
+    init_data(av);
     
 }
