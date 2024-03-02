@@ -6,15 +6,51 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:12:26 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/02/19 20:19:29 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/02 22:30:43 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void    init_forks(t_data *data)
+t_fork  *start_forks(void)
 {
-//=(
+    int i;
+    t_fork  *fork;
+
+    i = 0;
+    fork = malloc(sizeof(t_fork) * data()->nb_philo);
+    if(!fork)
+    {
+        free(data()->philo);
+        return NULL;
+    }
+    while(i < data()->nb_philo)
+    {
+        fork[i].lock = 0;
+        if(pthread_mutex_init(&fork[i].fork, NULL))
+            return (NULL);
+    }
+    return(fork);
+
+}
+
+void    start_mutex(void)
+{
+    int     i;
+    t_fork  *forks;
+
+    forks = start_forks();
+    i = 0;
+    while(i < data()->nb_philo)
+    {
+        data()->philo[i].forks = forks;
+        data()->philo[i].id = i + 1;
+        data()->philo[i].last_meal = time();
+        data()->philo[i].nb_meal = 0;
+    }
+    pthread_mutex_init(&data()->death, NULL);
+    pthread_mutex_init(&data()->print, NULL);
+
 }
 
 
@@ -29,10 +65,29 @@ void    init_data(char **av)
     else    
         data()->max_meals = -1;
     if(data()->nb_philo < 1 || data()->nb_philo > 200)
-        error("wrong number of philo");
+        error("wrong number of philo", 0);
+    data()->is_dead = 0;
     data()->philo = malloc(sizeof(t_philo) * data()->nb_philo);
     if (!data()->philo)
         return(NULL);
+    start_mutex();
+}
 
+void    work(void)
+{
+    int     i;
+    i = -1;
+
+    while(++i < data()->nb_philo)
+    {
+        if(pthread_create(&data()->philo[i].thread, NULL, &daily, &data()->philo[i]))
+            error("Error: thread create", 1);
+    }
+    i = -1;
+    while(++i < data()->nb_philo)
+    {
+        if(pthread_join(data()->philo[i].thread, NULL))
+            error("Error: thread join", 1);
+    }
 }
 

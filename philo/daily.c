@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   daily.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:36:42 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/02 21:50:17 by mneves-l         ###   ########.fr       */
+/*   Created: 2024/03/02 22:22:13 by mneves-l          #+#    #+#             */
+/*   Updated: 2024/03/02 22:27:08 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_data	*data(void)
+void    *daily(void *philos)
 {
-	static t_data	data;
+    t_philo     *philo;
+    philo = (t_philo *)philos;
 
-	return (&data);
-}
-
-int	main(int ac, char **av)
-{
-	if (check_arg(ac, av))
-		error("Invalid arguments", 0);
-    init_data(av);
-	work();
+    if(philo->id % 2)
+        usleep(5000);
+    while()
 }

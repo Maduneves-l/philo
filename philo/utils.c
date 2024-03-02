@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/23 15:36:42 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/02 21:50:17 by mneves-l         ###   ########.fr       */
+/*   Created: 2024/03/02 21:08:03 by mneves-l          #+#    #+#             */
+/*   Updated: 2024/03/02 21:19:20 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_data	*data(void)
+int    time(void)
 {
-	static t_data	data;
+    struct timeval      time;
 
-	return (&data);
-}
-
-int	main(int ac, char **av)
-{
-	if (check_arg(ac, av))
-		error("Invalid arguments", 0);
-    init_data(av);
-	work();
+    gettimeofday(&time, NULL);
+    return((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
