@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:12:26 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/02 22:30:43 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/10 19:27:47 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void    start_mutex(void)
 
 void    init_data(char **av)
 {
+    data()->start_time = time();
     data()->nb_philo = ft_atoi(av[1]);
     data()->time_to_die = ft_atoi(av[2]);
     data()->time_to_eat = ft_atoi(av[3]);
