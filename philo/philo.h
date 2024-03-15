@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:49 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 17:22:10 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 20:53:13 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,6 @@
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>
 
-typedef struct s_forks
-{
-	int 	lock;
-	pthread_mutex_t fork;
-}				t_fork;
-
-typedef struct s_philo
-{
-	int				id;
-	int 			x_eat;
-	int				nb_meal;
-	int 			last_meal;
-	pthread_t		thread;
-	t_fork			*forks;
-	
-}					t_philo;
-
 typedef struct s_data
 {
 	int				nb_philo;
@@ -49,13 +32,20 @@ typedef struct s_data
 	int 			is_dead;
 	pthread_mutex_t death;
 	pthread_mutex_t print;
+	pthread_mutex_t	*forks;
 	t_philo			*philo;
 }					t_data;
 
+typedef struct s_philo
+{
+	int				id;
+	int 			x_eat;
+	int 			last_meal;
+	pthread_t		thread;
+	int 			lock;
+	t_data 			*data;
+}					t_philo;
 
-
-//main.c
-t_data				*data(void);
 
 //check_arg.c
 int					check_arg(int ac, char **av);
@@ -66,31 +56,37 @@ int					ft_isdigit(int c);
 
 //utils.c
 int    ft_time(void);
-void    printer(const char *msg, t_philo *philo);
-int    diff_time(void);
-void    exit_program(void);
-void				error(char *s, int flag);
+void    printer(const char *msg, long long time, t_philo *philo, t_data *data);
+int    diff_time(long long a, long long b);
+void    exit_program(t_data *data, t_philo *philo);
+void				error(char *s, int flag, t_data *data);
 
 
 
 //philo.c
-void				init_data(char **av);
-void    			start_mutex(void);
-t_fork  			*start_forks(void);
-void   				 work(void);
+t_philo    *start_philo(t_data *data, t_philo *philo);
+void    start_mutex(t_data *data);
+t_philo    *init_data(t_data *data, char **av);
+void    work(t_data *data, t_philo *philo);
+
+
 
 //eating.c
-int     eating(t_philo *philo);
-void    lock_fork(t_philo *philo, int side);
-void    unlock_fork(int side);
+int     eating(t_philo *philo, t_data *data);
+
+void    lock_fork(t_philo *philo, t_data *data, int side);
+
+void    unlock_fork(t_philo *philo, t_data *data, int side);
+
 
 
 
 //daily.c
 void    *daily(void *philos);
-int    lock_dead();
-int     check_dead(t_philo *philo);
-int     ft_sleep(int time);
+int    lock_dead(t_data *data);
+int     check_dead(t_philo *philo, t_data *data);
+int     ft_sleep(int time, t_data *data);
+
 
 
 

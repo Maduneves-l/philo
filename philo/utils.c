@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 21:08:03 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 17:15:38 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 20:52:47 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,38 +20,35 @@ int    ft_time(void)
     return((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void    printer(const char *msg, t_philo *philo)
+void    printer(const char *msg, long long time, t_philo *philo, t_data *data)
 {
-    pthread_mutex_lock(&data()->print);
-    printf("%d %d %s\n", diff_time(), philo->id, msg);
-    pthread_mutex_unlock(&data()->print);
+    pthread_mutex_lock(&(data->print));
+    printf("%lli %d %s\n", time, philo->id, msg);
+    pthread_mutex_unlock(&(data->print));
 }
 
-int    diff_time(void)
+int    diff_time(long long a, long long b)
 {
-    return((ft_time()) - data()->start_time);
+    return(b - a);
 }
 
-void    exit_program(void)
+void    exit_program(t_data *data, t_philo *philo)
 {
     int i;
 
     i = -1;
 
-    while(++i < data()->nb_philo)
-        pthread_mutex_destroy(&data()->philo[i].forks->fork);
-    pthread_mutex_destroy(&data()->print);
-    pthread_mutex_destroy(&data()->death);
-    free(data()->philo->forks);
-    free(data()->philo);
-    free(data());
+    while(++i < data->nb_philo)
+        pthread_mutex_destroy(&(data->forks[i]));
+    pthread_mutex_destroy(&(data->print));
+    free(data->forks);
 }
-void	error(char *s, int flag)
+void	error(char *s, int flag, t_data *data)
 {
 	if(flag == 1)
 	{
-		free(data()->philo->forks);
-		free(data()->philo);
+		free(data->forks);
+		free(data->philo);
 	}
 	printf("Error: %s\n", s);
 	exit(EXIT_FAILURE);

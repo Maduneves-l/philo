@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 22:22:13 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 17:21:29 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 20:54:21 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,51 +19,51 @@ void    *daily(void *philos)
 
     if(philo->id % 2)
         usleep(5000);
-    while (!lock_dead())
+    while (!lock_dead(philo->data))
     {
-        if (eating(philo))
+        if (eating(philo, philo->data))
 			return (NULL);
-		if (philo->x_eat == data()->max_meals)
+		if (philo->x_eat == philo->data->max_meals)
 			break ;
-		if (!lock_dead())
+		if (!lock_dead(philo->data))
 		{
-			printer("is sleeping", philo);
-			ft_sleep(data()->time_to_sleep);
+			printer("is sleeping", philo->data->start_time, philo, philo->data);
+			ft_sleep(philo->data->time_to_sleep, philo->data);
 		}
-		if (! lock_dead())
-			printer("is thinking", philo);
+		if (!lock_dead(philo))
+			printer("is thinking", philo->data->start_time, philo, philo->data);
     }
     return NULL;
 }
 
-int    lock_dead()
+int    lock_dead(t_data *data)
 {
     int death;
     
-    pthread_mutex_lock(&(data()->death));
-    death = data()->is_dead;
-    pthread_mutex_unlock(&(data()->death));
+    pthread_mutex_lock(&(data->death));
+    death = data->is_dead;
+    pthread_mutex_unlock(&(data->death));
     return (death);
 }
 
-int     check_dead(t_philo *philo)
+int     check_dead(t_philo *philo, t_data *data)
 {
-    if(lock_dead())
+    if(lock_dead(data))
         return 1;
     usleep(500);
-    if(ft_time() - philo->last_meal > data()->time_to_die)
+    if(diff_time(philo->last_meal, ft_time()) >= data->time_to_die)
     {
-        pthread_mutex_lock(&(data()->death));
-        data()->is_dead++;
-        if(data()->is_dead == 1)
-            printer("died", philo);
-        pthread_mutex_unlock(&(data()->death));
+        pthread_mutex_lock(&(data->death));
+        data->is_dead++;
+        if(data->is_dead == 1)
+            printer("died", philo->last_meal, philo, data);
+        pthread_mutex_unlock(&(data->death));
         return 1;
     }
     return 0;
 }
 
-int     ft_sleep(int time)
+int     ft_sleep(int time, t_data *data)
 {
     int i;
     int j;
@@ -71,12 +71,12 @@ int     ft_sleep(int time)
     i = ft_time();
     j = 0;
 
-    while(!(lock_dead()) && j < time)
+    while(!(lock_dead(data)) && j < time)
     {
-        if(check_dead(data()->philo))
+        if(lock_dead(data))
             return 1;
         usleep(100);
-        j = ft_time() - i;
+        j = diff_time(i, ft_time());
     }
     return (j >= time);
 }
