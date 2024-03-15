@@ -6,13 +6,13 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 21:08:03 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/10 19:39:55 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:15:38 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int    time(void)
+int    ft_time(void)
 {
     struct timeval      time;
 
@@ -29,5 +29,30 @@ void    printer(const char *msg, t_philo *philo)
 
 int    diff_time(void)
 {
-    return((time()) - data()->start_time);
+    return((ft_time()) - data()->start_time);
+}
+
+void    exit_program(void)
+{
+    int i;
+
+    i = -1;
+
+    while(++i < data()->nb_philo)
+        pthread_mutex_destroy(&data()->philo[i].forks->fork);
+    pthread_mutex_destroy(&data()->print);
+    pthread_mutex_destroy(&data()->death);
+    free(data()->philo->forks);
+    free(data()->philo);
+    free(data());
+}
+void	error(char *s, int flag)
+{
+	if(flag == 1)
+	{
+		free(data()->philo->forks);
+		free(data()->philo);
+	}
+	printf("Error: %s\n", s);
+	exit(EXIT_FAILURE);
 }

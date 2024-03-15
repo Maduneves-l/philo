@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:12:26 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/10 19:27:47 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:33:36 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_fork  *start_forks(void)
         fork[i].lock = 0;
         if(pthread_mutex_init(&fork[i].fork, NULL))
             return (NULL);
+        i++;
     }
     return(fork);
 
@@ -40,12 +41,13 @@ void    start_mutex(void)
     t_fork  *forks;
 
     forks = start_forks();
-    i = 0;
-    while(i < data()->nb_philo)
+    i = -1;
+    while(++i < data()->nb_philo)
     {
+        data()->philo[i].x_eat = 0;
         data()->philo[i].forks = forks;
-        data()->philo[i].id = i + 1;
-        data()->philo[i].last_meal = time();
+        data()->philo[i].id = i;
+        data()->philo[i].last_meal = ft_time();
         data()->philo[i].nb_meal = 0;
     }
     pthread_mutex_init(&data()->death, NULL);
@@ -56,7 +58,7 @@ void    start_mutex(void)
 
 void    init_data(char **av)
 {
-    data()->start_time = time();
+    data()->start_time = ft_time();
     data()->nb_philo = ft_atoi(av[1]);
     data()->time_to_die = ft_atoi(av[2]);
     data()->time_to_eat = ft_atoi(av[3]);
@@ -70,7 +72,7 @@ void    init_data(char **av)
     data()->is_dead = 0;
     data()->philo = malloc(sizeof(t_philo) * data()->nb_philo);
     if (!data()->philo)
-        return(NULL);
+        error("malloc error", 0);
     start_mutex();
 }
 
@@ -90,5 +92,6 @@ void    work(void)
         if(pthread_join(data()->philo[i].thread, NULL))
             error("Error: thread join", 1);
     }
+    exit_program();
 }
 

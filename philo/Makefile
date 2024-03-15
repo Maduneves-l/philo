@@ -3,14 +3,14 @@
 ##########################################################
 
 NAME =  philo
-CFLAGS = -Wall -Werror -Wextra  -g #-fsanitize=address 
+CFLAGS = -Wall -Werror -Wextra  -g -fsanitize=thread
 CC = cc 
 
 ##########################################################
 #					SOURCES AND OBJS					 #
 ##########################################################
 
-SRCS =  main.c check_arg.c error.c philo.c \
+SRCS =  main.c check_arg.c daily.c utils.c eating.c philo.c \
 
 INCLUDES = includes
 

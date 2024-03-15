@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:49 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/02 22:29:44 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:22:10 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,23 @@
 # include <stdlib.h>
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>
+
+typedef struct s_forks
+{
+	int 	lock;
+	pthread_mutex_t fork;
+}				t_fork;
+
+typedef struct s_philo
+{
+	int				id;
+	int 			x_eat;
+	int				nb_meal;
+	int 			last_meal;
+	pthread_t		thread;
+	t_fork			*forks;
+	
+}					t_philo;
 
 typedef struct s_data
 {
@@ -35,21 +52,7 @@ typedef struct s_data
 	t_philo			*philo;
 }					t_data;
 
-typedef struct s_philo
-{
-	int				id;
-	int				nb_meal;
-	int 			last_meal;
-	pthread_t		thread;
-	t_fork			*forks;
-	
-}					t_philo;
 
-typedef struct s_forks
-{
-	int 	lock;
-	pthread_mutex_t fork;
-}				t_fork;
 
 //main.c
 t_data				*data(void);
@@ -61,17 +64,36 @@ long int			ft_atoi(char *str);
 int					check_int(char **av);
 int					ft_isdigit(int c);
 
-//error.c
+//utils.c
+int    ft_time(void);
+void    printer(const char *msg, t_philo *philo);
+int    diff_time(void);
+void    exit_program(void);
 void				error(char *s, int flag);
 
-//utils.c
-int    				time(void);
+
 
 //philo.c
 void				init_data(char **av);
 void    			start_mutex(void);
 t_fork  			*start_forks(void);
+void   				 work(void);
 
-void    *			daily(void *philos);
+//eating.c
+int     eating(t_philo *philo);
+void    lock_fork(t_philo *philo, int side);
+void    unlock_fork(int side);
+
+
+
+//daily.c
+void    *daily(void *philos);
+int    lock_dead();
+int     check_dead(t_philo *philo);
+int     ft_sleep(int time);
+
+
+
+
 
 #endif
