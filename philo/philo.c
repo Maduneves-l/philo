@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:12:26 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 20:51:05 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 21:01:52 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ void    work(t_data *data, t_philo *philo)
         if(pthread_join(philo[i].thread, NULL))
             error("Error: thread join", 1, data);
     }
-    exit_program(data, philo);
+    exit_program(data);
 }
 

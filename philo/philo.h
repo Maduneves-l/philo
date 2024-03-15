@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:49 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 20:53:13 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 21:00:33 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>
+
+typedef struct s_philo t_philo;
 
 typedef struct s_data
 {
@@ -58,7 +60,7 @@ int					ft_isdigit(int c);
 int    ft_time(void);
 void    printer(const char *msg, long long time, t_philo *philo, t_data *data);
 int    diff_time(long long a, long long b);
-void    exit_program(t_data *data, t_philo *philo);
+void    exit_program(t_data *data);
 void				error(char *s, int flag, t_data *data);
 
 

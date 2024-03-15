@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 21:08:03 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 20:52:47 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 21:04:25 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int    ft_time(void)
 void    printer(const char *msg, long long time, t_philo *philo, t_data *data)
 {
     pthread_mutex_lock(&(data->print));
-    printf("%lli %d %s\n", time, philo->id, msg);
+    printf("%lli %d %s\n", (ft_time() - time), philo->id, msg);
     pthread_mutex_unlock(&(data->print));
 }
 
@@ -32,7 +32,7 @@ int    diff_time(long long a, long long b)
     return(b - a);
 }
 
-void    exit_program(t_data *data, t_philo *philo)
+void    exit_program(t_data *data)
 {
     int i;
 

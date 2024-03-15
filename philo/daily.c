@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 22:22:13 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 20:54:21 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 20:59:38 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void    *daily(void *philos)
 			printer("is sleeping", philo->data->start_time, philo, philo->data);
 			ft_sleep(philo->data->time_to_sleep, philo->data);
 		}
-		if (!lock_dead(philo))
+		if (!lock_dead(philo->data))
 			printer("is thinking", philo->data->start_time, philo, philo->data);
     }
     return NULL;

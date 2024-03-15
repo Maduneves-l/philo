@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:41:48 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 20:54:50 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/15 21:01:26 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void    lock_fork(t_philo *philo, t_data *data, int side)
     while(!check_dead(philo, data))
     {
         pthread_mutex_lock(&philo->data->forks[side]);
-        if (!data->philo[side]->lock)
+        if (!data->philo[side].lock)
         {
-            data->philo[side]->lock= 1;
+            data->philo[side].lock= 1;
             pthread_mutex_unlock(&philo->data->forks[side]);
             break ; 
         }

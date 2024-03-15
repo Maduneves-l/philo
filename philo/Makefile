@@ -3,7 +3,7 @@
 ##########################################################
 
 NAME =  philo
-CFLAGS = -Wall -Werror -Wextra  -g -fsanitize=thread
+CFLAGS = -Wall -Werror -Wextra  -g #-fsanitize=thread
 CC = cc 
 
 ##########################################################
