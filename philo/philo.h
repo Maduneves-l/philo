@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:36:49 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/16 14:58:35 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:31:33 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void					lock_fork(t_philo *philo, t_data *data, int side);
 void					unlock_fork(t_philo *philo, t_data *data, int side);
 
 //daily.c
+int						ft_abs(int num);
 void					*daily(void *philos);
 int						lock_dead(t_data *data);
 int						check_dead(t_philo *philo, t_data *data);

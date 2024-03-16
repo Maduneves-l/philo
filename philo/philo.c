@@ -6,7 +6,7 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 15:12:26 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/16 14:58:30 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:01:30 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	start_mutex(t_data *data)
 	data->forks = malloc(sizeof(t_data) * data->nb_philo);
 	if (!data->forks)
 		error("Error: malloc", 0, NULL);
-	while (++i < data->nb_philo)
+	while (++i <= data->nb_philo)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			error("Error: mutex init", 0, NULL);
@@ -91,4 +91,5 @@ void	work(t_data *data, t_philo *philo)
 			error("Error: thread join", 1, data);
 	}
 	exit_program(data);
+	free(philo);
 }
