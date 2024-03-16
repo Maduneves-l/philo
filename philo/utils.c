@@ -6,46 +6,46 @@
 /*   By: mneves-l <mneves-l@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/02 21:08:03 by mneves-l          #+#    #+#             */
-/*   Updated: 2024/03/15 21:04:25 by mneves-l         ###   ########.fr       */
+/*   Updated: 2024/03/16 14:59:53 by mneves-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int    ft_time(void)
+int	ft_time(void)
 {
-    struct timeval      time;
+	struct timeval	time;
 
-    gettimeofday(&time, NULL);
-    return((time.tv_sec * 1000) + (time.tv_usec / 1000));
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void    printer(const char *msg, long long time, t_philo *philo, t_data *data)
+void	printer(const char *msg, long long time, t_philo *philo, t_data *data)
 {
-    pthread_mutex_lock(&(data->print));
-    printf("%lli %d %s\n", (ft_time() - time), philo->id, msg);
-    pthread_mutex_unlock(&(data->print));
+	pthread_mutex_lock(&(data->print));
+	printf("%lli %d %s\n", (ft_time() - time), philo->id, msg);
+	pthread_mutex_unlock(&(data->print));
 }
 
-int    diff_time(long long a, long long b)
+int	diff_time(long long a, long long b)
 {
-    return(b - a);
+	return (b - a);
 }
 
-void    exit_program(t_data *data)
+void	exit_program(t_data *data)
 {
-    int i;
+	int	i;
 
-    i = -1;
-
-    while(++i < data->nb_philo)
-        pthread_mutex_destroy(&(data->forks[i]));
-    pthread_mutex_destroy(&(data->print));
-    free(data->forks);
+	i = -1;
+	while (++i < data->nb_philo)
+		pthread_mutex_destroy(&(data->forks[i]));
+	pthread_mutex_destroy(&(data->print));
+	free(data->forks);
 }
+
 void	error(char *s, int flag, t_data *data)
 {
-	if(flag == 1)
+	if (flag == 1)
 	{
 		free(data->forks);
 		free(data->philo);
